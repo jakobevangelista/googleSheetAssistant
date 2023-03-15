@@ -1,3 +1,4 @@
+"use client";
 import PocketBase from "pocketbase";
 import { useSession, signIn, signOut } from "next-auth/react";
 
