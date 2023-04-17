@@ -7,7 +7,7 @@ import ChatMessage from "../components/Chatmessage";
 
 // import { useSession, signIn, signOut } from "next-auth/react";
 
-const pb = new PocketBase("http://45.33.6.9");
+const pb = new PocketBase("http://45.33.6.9:80");
 
 export default function Home() {
   const router = useRouter();
@@ -36,7 +36,7 @@ export default function Home() {
     event.preventDefault();
     let chatLogNew = [...chatLog, { role: "user", content: `${userInput}` }];
 
-    const response = await fetch("/api/generate", {
+    const response = await fetch("http://127.0.0.1:5000/fix", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,6 +44,7 @@ export default function Home() {
       body: JSON.stringify({ message: userInput }), // takes only the user input for now, use more advanced prompt engineering to mimic chatgpt
     });
     const data = await response.json();
+    console.log(data);
     setUserInput("");
     setChatLog([
       ...chatLogNew,
@@ -102,7 +103,7 @@ export default function Home() {
           </div>
           <iframe
             className="px-16 py-64 bg-[#202123] w-1/2 h-screen"
-            src="https://docs.google.com/spreadsheets/d/12Qocr5PiUQUKxaxaf4fbur1DFNslKjUuH2hoCaOaGGE/edit?usp=sharing"
+            src="https://docs.google.com/spreadsheets/d/11oC81VbhDhRqE8NY2ZNrlEXIrdsAummmLxihhPqctmw/edit#gid=0"
           ></iframe>
         </div>
       </div>
