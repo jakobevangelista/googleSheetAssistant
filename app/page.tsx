@@ -38,18 +38,18 @@ export default function Home() {
   //   setUsername(pb.authStore.model.username);
   // }, [router]);
 
-  function logout() {
-    pb.authStore.clear();
-    router.push("/login");
-  }
+  // function logout() {
+  //   pb.authStore.clear();
+  //   router.push("/login");
+  // }
 
   async function handleSubmit(event) {
     event.preventDefault();
     let chatLogNew = [...chatLog, { role: "user", content: `${userInput}` }];
 
     const response = await fetch(
-      // "https://botaiwebsitebackend.herokuapp.com/fix",
-      "http://127.0.0.1:5000/fix",
+      "https://botaiwebsitebackend.herokuapp.com/fix",
+      // "http://127.0.0.1:5000/fix",
       {
         method: "POST",
         headers: {
@@ -70,6 +70,23 @@ export default function Home() {
   async function handleSheetLink(event) {
     event.preventDefault();
     setRealLink(sheetLink);
+    const reg = /\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/;
+    const str = realLink;
+    const match = str.match(reg);
+    let sheetId = match && match[1];
+    console.log(sheetId);
+    const response = await fetch(
+      "https://botaiwebsitebackend.herokuapp.com/setKey",
+      // "http://127.0.0.1:5000/setKey",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ key: sheetId }), // takes only the user input for now, use more advanced prompt engineering to mimic chatgpt
+      }
+    );
+    setSheetLink("");
   }
 
   function clearChat() {
