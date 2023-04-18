@@ -22,7 +22,7 @@ export default function Home() {
   const [chatLog, setChatLog] = useState([
     {
       role: "system",
-      content: `You are a bot that is an expert at google sheets and helps users out with all things related to google sheets.`,
+      content: `Hello, how can I help you today?`,
     },
   ]);
   const [darkMode, setDarkMode] = useState(true);
