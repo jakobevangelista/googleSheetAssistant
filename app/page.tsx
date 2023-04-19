@@ -48,8 +48,8 @@ export default function Home() {
     let chatLogNew = [...chatLog, { role: "user", content: `${userInput}` }];
 
     const response = await fetch(
-      "https://botaiwebsitebackend.herokuapp.com/fix",
-      // "http://127.0.0.1:5000/fix",
+      // "https://botaiwebsitebackend.herokuapp.com/fix",
+      "http://127.0.0.1:5000/fix",
       {
         method: "POST",
         headers: {
@@ -71,13 +71,13 @@ export default function Home() {
     event.preventDefault();
     setRealLink(sheetLink);
     const reg = /\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/;
-    const str = realLink;
+    const str = sheetLink;
     const match = str.match(reg);
     let sheetId = match && match[1];
     console.log(sheetId);
     const response = await fetch(
-      "https://botaiwebsitebackend.herokuapp.com/setKey",
-      // "http://127.0.0.1:5000/setKey",
+      // "https://botaiwebsitebackend.herokuapp.com/setKey",
+      "http://127.0.0.1:5000/setKey",
       {
         method: "POST",
         headers: {
