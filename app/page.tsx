@@ -27,10 +27,6 @@ export default function Home() {
   ]);
   const [darkMode, setDarkMode] = useState(true);
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
   // useEffect(() => {
   //   if (!pb.authStore.model) {
   //     router.push("/login");
@@ -103,6 +99,9 @@ export default function Home() {
   function decreaseTextSize() {
     setFontSize("flex text-sm");
   }
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   return (
     <>
@@ -116,7 +115,7 @@ export default function Home() {
             className="text-center py-3 px-3 rounded-md hover:bg-gray-500 border border-white text-white cursor-pointer"
             onClick={clearChat}
           >
-            New Chat
+            Clear Chat
           </a>
           <div className="text-center py-3 px-3 rounded-md mt-64 text-white">
             Settings
@@ -148,11 +147,20 @@ export default function Home() {
             {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
         </div>
-        <div className="flex flex-row w-5/6 bg-white dark:bg-[#202123] h-screen">
+        <div className="flex flex-row w-5/6 bg-white h-screen dark:bg-[#202123]">
+          {/* <div
+          className={`flex flex-row w-5/6 h-screen ${
+            darkMode ? "bg-[#202123]" : "bg-white"
+          }`}
+        > */}
           <div className="flex-col overflow-y-auto w-1/2 h-screen">
             <div className="flex overflow-y-auto relative flex-col pb-14">
               {chatLog.map((content, index) => (
-                <ChatMessage key={index} message={content} />
+                <ChatMessage
+                  key={index}
+                  message={content}
+                  darkmode={darkMode}
+                />
               ))}
             </div>
             <div className="p-3 bottom-0">
