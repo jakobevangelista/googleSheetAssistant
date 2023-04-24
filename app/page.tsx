@@ -27,6 +27,18 @@ export default function Home() {
   ]);
   const [darkMode, setDarkMode] = useState(true);
 
+  useEffect(() => {
+    fetch("https://botaiwebsitebackend.herokuapp.com/setKey", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        key: "11oC81VbhDhRqE8NY2ZNrlEXIrdsAummmLxihhPqctmw",
+      }),
+    });
+  });
+
   // useEffect(() => {
   //   if (!pb.authStore.model) {
   //     router.push("/login");
