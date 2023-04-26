@@ -211,7 +211,7 @@ export default function Home() {
             </AlertDialogContent>
           </AlertDialog>
         </div>
-        <div className="flex flex-row w-5/6 h-screen dark:bg-[#202123]">
+        <div className="flex flex-row w-5/6 h-screen bg-[#202123]">
           {/* <div
           className={`flex flex-row w-5/6 h-screen ${
             darkMode ? "bg-[#202123]" : "bg-white"
