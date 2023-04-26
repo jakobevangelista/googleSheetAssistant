@@ -1,5 +1,6 @@
-import './global.css';
-import ProvidersWrapper from './ProvidersWrapper';
+import "./global.css";
+import ProvidersWrapper from "./ProvidersWrapper";
+import ChakraUiWrapper from "./ChakraUiWrapper";
 
 export default function RootLayout({ children }) {
   return (
@@ -10,8 +11,10 @@ export default function RootLayout({ children }) {
       */}
       <head />
       <body>
-        <ProvidersWrapper>{children}</ProvidersWrapper>
+        <ChakraUiWrapper>
+          <ProvidersWrapper>{children}</ProvidersWrapper>
+        </ChakraUiWrapper>
       </body>
     </html>
-  )
+  );
 }

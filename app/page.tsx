@@ -4,7 +4,17 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useState } from "react";
 import ChatMessage from "../components/Chatmessage";
-import Link from "next/link";
+import { AlertDialogFooter, useDisclosure } from "@chakra-ui/react";
+import { useRef } from "react";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  AlertDialogCloseButton,
+  Button,
+} from "@chakra-ui/react";
 
 // import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -15,7 +25,7 @@ export default function Home() {
   // const [username, setUsername] = useState("");
   const [userInput, setUserInput] = useState("");
   const [sheetLink, setSheetLink] = useState("");
-  const [fontSize, setFontSize] = useState("flex");
+  const [fontSize, setFontSize] = useState("flex text-base");
   const [realLink, setRealLink] = useState(
     "https://docs.google.com/spreadsheets/d/11oC81VbhDhRqE8NY2ZNrlEXIrdsAummmLxihhPqctmw/edit#gid=0"
   );
@@ -26,6 +36,8 @@ export default function Home() {
     },
   ]);
   const [darkMode, setDarkMode] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   useEffect(() => {
     fetch("https://botaiwebsitebackend.herokuapp.com/setKey", {
@@ -38,18 +50,6 @@ export default function Home() {
       }),
     });
   });
-
-  // useEffect(() => {
-  //   if (!pb.authStore.model) {
-  //     router.push("/login");
-  //   }
-  //   setUsername(pb.authStore.model.username);
-  // }, [router]);
-
-  // function logout() {
-  //   pb.authStore.clear();
-  //   router.push("/login");
-  // }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -101,15 +101,35 @@ export default function Home() {
     setChatLog([
       {
         role: "system",
-        content: `You are a bot that is an expert at google sheets and helps users out with all things related to google sheets.`,
+        content: `Hello, how can I help you today?`,
       },
     ]);
   }
   function increaseTextSize() {
-    setFontSize("flex text-xl");
+    // setFontSize("flex text-xl");
+    switch (fontSize) {
+      case "flex text-sm":
+        setFontSize("flex text-base");
+        break;
+      case "flex text-base":
+        setFontSize("flex text-lg");
+        break;
+      default:
+        break;
+    }
   }
   function decreaseTextSize() {
-    setFontSize("flex text-sm");
+    // setFontSize("flex text-base");
+    switch (fontSize) {
+      case "flex text-lg":
+        setFontSize("flex text-base");
+        break;
+      case "flex text-base":
+        setFontSize("flex text-sm");
+        break;
+      default:
+        break;
+    }
   }
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
@@ -119,7 +139,7 @@ export default function Home() {
     <>
       {/* <div className={`${darkMode ? "dark" : ""}`}> */}
       <div className={`${darkMode ? "dark" : ""} ${fontSize}`}>
-        <div className="flex flex-col w-1/6 bg-[#343541] h-screen">
+        <div className="flex flex-col relative w-1/6 bg-[#343541] h-screen">
           <div className="text-center py-3 px-3 rounded-md hover:underline text-white cursor-pointer">
             bots.ai
           </div>
@@ -158,8 +178,34 @@ export default function Home() {
           >
             {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
+          <Button onClick={onOpen} className="absolute w-full bottom-0">
+            ? Help
+          </Button>
+          <AlertDialog
+            motionPreset="slideInBottom"
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}
+            isOpen={isOpen}
+            isCentered
+          >
+            <AlertDialogOverlay />
+
+            <AlertDialogContent>
+              <AlertDialogHeader>Help</AlertDialogHeader>
+              <AlertDialogCloseButton />
+              <AlertDialogBody textAlign="center">
+                To use the chat bot, insert a the task you wish to do into the
+                "ask me anything" text box. The action will either be executed,
+                or it will give you easy to follow steps to in order to carry
+                out the task you would like to do.
+              </AlertDialogBody>
+              <AlertDialogFooter textAlign="center">
+                Try it out!
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
-        <div className="flex flex-row w-5/6 bg-white h-screen dark:bg-[#202123]">
+        <div className="flex flex-row w-5/6 h-screen dark:bg-[#202123]">
           {/* <div
           className={`flex flex-row w-5/6 h-screen ${
             darkMode ? "bg-[#202123]" : "bg-white"
@@ -176,13 +222,19 @@ export default function Home() {
               ))}
             </div>
             <div className="p-3 bottom-0">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} className="flex flex-row ">
                 <input
-                  className="w-full bg-[#40414f] rounded-md text-white outline-none p-3"
+                  className="w-11/12 bg-[#40414f] rounded-md text-white outline-none p-3"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
                   placeholder="Ask me anything"
                 ></input>
+                <button
+                  type="submit"
+                  className="w-1/12 text-white border border-white rounded-md hover:bg-gray-500"
+                >
+                  Submit
+                </button>
               </form>
             </div>
           </div>
