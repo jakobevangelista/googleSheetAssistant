@@ -55,6 +55,12 @@ export default function Home() {
     event.preventDefault();
     let chatLogNew = [...chatLog, { role: "user", content: `${userInput}` }];
 
+    // setRealLink(sheetLink);
+    const reg = /\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/;
+    const str = realLink;
+    const match = str.match(reg);
+    let sheetId = match && match[1];
+
     const response = await fetch(
       "https://botaiwebsitebackend.herokuapp.com/fix",
       // "http://127.0.0.1:5000/fix",
@@ -63,7 +69,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: userInput }), // takes only the user input for now, use more advanced prompt engineering to mimic chatgpt
+        body: JSON.stringify({ message: userInput, id: sheetId }), // takes only the user input for now, use more advanced prompt engineering to mimic chatgpt
       }
     );
     const data = await response.json();
@@ -195,7 +201,7 @@ export default function Home() {
               <AlertDialogCloseButton />
               <AlertDialogBody textAlign="center">
                 To use the chat bot, insert a the task you wish to do into the
-                "ask me anything" text box. The action will either be executed,
+                'ask me anything' text box. The action will either be executed,
                 or it will give you easy to follow steps to in order to carry
                 out the task you would like to do.
               </AlertDialogBody>
