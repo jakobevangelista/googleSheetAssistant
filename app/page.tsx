@@ -1,7 +1,6 @@
 "use client";
 import PocketBase from "pocketbase";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { useState } from "react";
 import ChatMessage from "../components/Chatmessage";
 import { AlertDialogFooter, useDisclosure } from "@chakra-ui/react";
@@ -17,13 +16,10 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 
-// import { useSession, signIn, signOut } from "next-auth/react";
-
 const pb = new PocketBase("http://45.33.6.9:80");
 
 export default function Home() {
   const router = useRouter();
-  // const [username, setUsername] = useState("");
   const [userInput, setUserInput] = useState("");
   const [sheetLink, setSheetLink] = useState("");
   const [fontSize, setFontSize] = useState("flex text-base");
@@ -40,18 +36,6 @@ export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const cancelRef = useRef();
-
-  useEffect(() => {
-    fetch("https://botaiwebsitebackend.herokuapp.com/setKey", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        key: "11oC81VbhDhRqE8NY2ZNrlEXIrdsAummmLxihhPqctmw",
-      }),
-    });
-  });
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -78,8 +62,13 @@ export default function Home() {
     const data = await response.json();
     setLoading(false);
     console.log(data);
-    let rawString = data.content;
-    let parseResponse = rawString.substring(2).replace(/(\d\.\s)/g, "\n$1");
+    let rawString = String(data.content);
+    let parseResponse = rawString
+      .substring(2)
+      .replace(/(\d\.\s)/g, "$1")
+      .replace(/\n/g, "<br>");
+    console.log(parseResponse);
+
     setUserInput("");
     setChatLog([
       ...chatLogNew,
@@ -156,24 +145,24 @@ export default function Home() {
             ></input>
           </form>
           <a
-            className="text-center py-3 px-3 rounded-md hover:bg-gray-500 border border-white text-white cursor-pointer"
+            className="text-center p-3 mx-3 mb-3 rounded-md hover:bg-gray-500 border border-white text-white cursor-pointer"
             onClick={increaseTextSize}
           >
             Increase Text Size
           </a>
           <a
-            className="text-center py-3 px-3 rounded-md hover:bg-gray-500 border border-white text-white cursor-pointer"
+            className="text-center p-3 mx-3 rounded-md hover:bg-gray-500 border border-white text-white cursor-pointer"
             onClick={decreaseTextSize}
           >
             Decrease Text Size
           </a>
           <button
-            className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white mx-2"
+            className="text-gray-600 mt-3 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white mx-2"
             onClick={toggleDarkMode}
           >
             {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
-          <Button onClick={onOpen} className="absolute w-full bottom-0">
+          <Button onClick={onOpen} className="absolute mb-3 w-full bottom-0">
             ? Help
           </Button>
           <AlertDialog
@@ -207,7 +196,7 @@ export default function Home() {
           }`}
         > */}
           <div className="flex-col overflow-y-auto w-1/2 h-screen">
-            <div className="flex overflow-y-auto relative flex-col pb-14">
+            <div className="flex overflow-y-auto pl-3 pr-3 relative flex-col pb-1">
               {chatLog.map((content, index) => (
                 <ChatMessage
                   key={index}
@@ -236,12 +225,6 @@ export default function Home() {
                     "Submit" // show "Submit" text when not loading
                   )}
                 </Button>
-                {/* <button
-                  type="submit"
-                  className="w-1/12 text-white border border-white rounded-md hover:bg-gray-500"
-                >
-                  Submit
-                </button> */}
               </form>
             </div>
           </div>

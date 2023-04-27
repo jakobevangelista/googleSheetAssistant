@@ -2,7 +2,7 @@ function ChatMessage({ message, darkmode }) {
   return (
     <>
       <div
-        class={`flex flex-row p-[24px] text-left rounded-full ${
+        class={`flex flex-row p-[24px] rounded text-left ${
           message.role === "assistant" || message.role === "system"
             ? `${darkmode ? "bg-[#444654]" : "bg-neutral-400"}`
             : `${darkmode ? "bg-[#343541]" : "bg-[#ffffff]"}`
@@ -20,7 +20,8 @@ function ChatMessage({ message, darkmode }) {
             darkmode ? "text-white" : "text-black"
           } pl-3 items-center w-5/6`}
         >
-          {message.content}
+          <div dangerouslySetInnerHTML={{ __html: message.content }} />
+          {/* {message.content} */}
         </div>
       </div>
     </>
