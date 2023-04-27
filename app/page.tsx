@@ -14,6 +14,7 @@ import {
   AlertDialogOverlay,
   AlertDialogCloseButton,
   Button,
+  Spinner,
 } from "@chakra-ui/react";
 
 // import { useSession, signIn, signOut } from "next-auth/react";
@@ -37,6 +38,7 @@ export default function Home() {
   ]);
   const [darkMode, setDarkMode] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [loading, setLoading] = useState(false);
   const cancelRef = useRef();
 
   useEffect(() => {
@@ -53,6 +55,7 @@ export default function Home() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setLoading(true);
     let chatLogNew = [...chatLog, { role: "user", content: `${userInput}` }];
 
     // setRealLink(sheetLink);
@@ -73,6 +76,7 @@ export default function Home() {
       }
     );
     const data = await response.json();
+    setLoading(false);
     console.log(data);
     setUserInput("");
     setChatLog([
@@ -143,8 +147,7 @@ export default function Home() {
 
   return (
     <>
-      {/* <div className={`${darkMode ? "dark" : ""}`}> */}
-      <div className={`${darkMode ? "dark" : ""} ${fontSize}`}>
+      <div className={`${fontSize}`}>
         <div className="flex flex-col relative w-1/6 bg-[#343541] h-screen">
           <div className="text-center py-3 px-3 rounded-md hover:underline text-white cursor-pointer">
             bots.ai
@@ -230,17 +233,29 @@ export default function Home() {
             <div className="p-3 bottom-0">
               <form onSubmit={handleSubmit} className="flex flex-row ">
                 <input
-                  className="w-11/12 bg-[#40414f] rounded-md text-white outline-none p-3"
+                  className="w-5/6 bg-[#40414f] rounded-md text-white outline-none p-3"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
                   placeholder="Ask me anything"
                 ></input>
-                <button
+                <Button
+                  onClick={handleSubmit}
+                  size="lg"
+                  className="w-1/6 px-4 align-center text-sm font-medium text-white bg-[#343541] rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  isLoading={loading} // set isLoading to the loading state variable
+                >
+                  {loading ? (
+                    <Spinner size="sm" color="white" mr={2} /> // show spinner while loading
+                  ) : (
+                    "Submit" // show "Submit" text when not loading
+                  )}
+                </Button>
+                {/* <button
                   type="submit"
                   className="w-1/12 text-white border border-white rounded-md hover:bg-gray-500"
                 >
                   Submit
-                </button>
+                </button> */}
               </form>
             </div>
           </div>
@@ -250,7 +265,6 @@ export default function Home() {
           ></iframe>
         </div>
       </div>
-      {/* </div> */}
     </>
   );
 }
