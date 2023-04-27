@@ -65,8 +65,8 @@ export default function Home() {
     let sheetId = match && match[1];
 
     const response = await fetch(
-      // "https://botaiwebsitebackend.herokuapp.com/fix",
-      "http://127.0.0.1:5000/fix",
+      "https://botaiwebsitebackend.herokuapp.com/fix",
+      // "http://127.0.0.1:5000/fix",
       {
         method: "POST",
         headers: {
