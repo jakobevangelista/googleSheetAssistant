@@ -128,7 +128,7 @@ export default function Home() {
             bots.ai
           </div>
           <a
-            className="text-center py-3 px-3 rounded-md hover:bg-gray-500 border border-white text-white cursor-pointer"
+            className="text-center py-3 px-3 mx-3 rounded-md hover:bg-gray-500 border border-white text-white cursor-pointer"
             onClick={clearChat}
           >
             Clear Chat
