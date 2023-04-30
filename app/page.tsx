@@ -14,12 +14,13 @@ import {
   AlertDialogCloseButton,
   Button,
   Spinner,
+  useToast,
 } from "@chakra-ui/react";
 
 const pb = new PocketBase("http://45.33.6.9:80");
 
 export default function Home() {
-  const router = useRouter();
+  const toast = useToast();
   const [userInput, setUserInput] = useState("");
   const [sheetLink, setSheetLink] = useState("");
   const [fontSize, setFontSize] = useState("flex text-base");
@@ -119,6 +120,17 @@ export default function Home() {
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
+  function copyEmail() {
+    navigator.clipboard.writeText(
+      "service-account@sheets-translator-382119.iam.gserviceaccount.com"
+    );
+    toast({
+      title: "Copied!",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  }
 
   return (
     <>
@@ -177,24 +189,45 @@ export default function Home() {
             <AlertDialogContent>
               <AlertDialogHeader>Help</AlertDialogHeader>
               <AlertDialogCloseButton />
-              <AlertDialogBody textAlign="center">
+              <AlertDialogBody>
                 To use the chat bot, insert a the task you wish to do into the
                 'ask me anything' text box. The action will either be executed,
                 or it will give you easy to follow steps to in order to carry
                 out the task you would like to do.
               </AlertDialogBody>
+              <AlertDialogHeader>FAQ</AlertDialogHeader>
+              <AlertDialogHeader className="text-sm">
+                My sheet does not show up / is not able to be edited?
+              </AlertDialogHeader>
+              <AlertDialogBody>
+                In order for your sheet to be viewed within the software, you
+                need to:
+                <div>
+                  1. share the click the share icon in the top right corner of
+                  your sheet
+                  <div>
+                    2. In the "General Access" tab, make sure "Anyone with the
+                    link" is selected, this will allow your sheet to be viewed
+                    within the website
+                  </div>
+                </div>
+                <div>
+                  3. Give access to the following account, click to copy:
+                </div>
+                <span
+                  className="text-align-center hover:underline"
+                  onClick={copyEmail}
+                >
+                  service-account@sheets-translator-382119.iam.gserviceaccount.com
+                </span>
+              </AlertDialogBody>
               <AlertDialogFooter textAlign="center">
-                Try it out!
+                <Button onClick={onClose}>Try it out!</Button>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         </div>
         <div className="flex flex-row w-5/6 h-screen bg-[#202123]">
-          {/* <div
-          className={`flex flex-row w-5/6 h-screen ${
-            darkMode ? "bg-[#202123]" : "bg-white"
-          }`}
-        > */}
           <div className="flex-col overflow-y-auto w-1/2 h-screen">
             <div className="flex overflow-y-auto pl-3 pr-3 relative flex-col pb-1">
               {chatLog.map((content, index) => (
