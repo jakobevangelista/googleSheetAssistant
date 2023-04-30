@@ -175,7 +175,7 @@ export default function Home() {
             {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
           <Button onClick={onOpen} className="absolute mb-3 w-full bottom-0">
-            ? Help
+            Help / FAQ
           </Button>
           <AlertDialog
             motionPreset="slideInBottom"
@@ -187,7 +187,7 @@ export default function Home() {
             <AlertDialogOverlay />
 
             <AlertDialogContent>
-              <AlertDialogHeader>Help</AlertDialogHeader>
+              <AlertDialogHeader>Help / FAQ</AlertDialogHeader>
               <AlertDialogCloseButton />
               <AlertDialogBody>
                 To use the chat bot, insert a the task you wish to do into the
@@ -196,7 +196,7 @@ export default function Home() {
                 out the task you would like to do.
               </AlertDialogBody>
               <AlertDialogHeader>FAQ</AlertDialogHeader>
-              <AlertDialogHeader className="text-sm">
+              <AlertDialogHeader className="text-base">
                 My sheet does not show up / is not able to be edited?
               </AlertDialogHeader>
               <AlertDialogBody>
@@ -212,10 +212,11 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  3. Give access to the following account, click to copy:
+                  3. Give access to your sheet with the following account, click
+                  to copy:
                 </div>
                 <span
-                  className="text-align-center hover:underline"
+                  className="text-align-center hover:underline cursor-pointer"
                   onClick={copyEmail}
                 >
                   service-account@sheets-translator-382119.iam.gserviceaccount.com
