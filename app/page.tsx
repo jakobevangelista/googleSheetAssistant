@@ -232,6 +232,18 @@ export default function Home() {
                 you want on the bottom and drag it to the front. In other words,
                 just make the sheet you want to edit the first sheet.
               </AlertDialogBody>
+              <AlertDialogHeader className="text-base">
+                Security Concern! Is my sheet vulnerable if I share to the
+                service account?
+              </AlertDialogHeader>
+              <AlertDialogBody>
+                Yes, whenever you share the spreadsheet with the service
+                account, there is indeed a vulnerability if someone has access
+                to the url of your google spreadsheet. As such, we recommend
+                that you refrain from sharing the URL and removing the service
+                account from the shared users after you are finished using the
+                software.
+              </AlertDialogBody>
               <AlertDialogFooter textAlign="center">
                 <Button onClick={onClose}>Try it out!</Button>
               </AlertDialogFooter>
