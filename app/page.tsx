@@ -222,6 +222,16 @@ export default function Home() {
                   service-account@sheets-translator-382119.iam.gserviceaccount.com
                 </span>
               </AlertDialogBody>
+              <AlertDialogHeader className="text-base">
+                I am unable to edit a sheet that isn't my first sheet. All my
+                instructions are being executed on the first sheet.
+              </AlertDialogHeader>
+              <AlertDialogBody>
+                Our software is currently set to operate on the first sheet
+                only. To edit the sheet tab of your choosing, select the sheet
+                you want on the bottom and drag it to the front. In other words,
+                just make the sheet you want to edit the first sheet.
+              </AlertDialogBody>
               <AlertDialogFooter textAlign="center">
                 <Button onClick={onClose}>Try it out!</Button>
               </AlertDialogFooter>
